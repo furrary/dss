@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the nest method from the Dss class, for the Dart programming language.">
+  <title>nest method - Dss class - dss library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">dss</a></li>
+    <li><a href="dss/dss-library.html">dss</a></li>
+    <li><a href="dss/Dss-class.html">Dss</a></li>
+    <li class="self-crumb">nest method</li>
+  </ol>
+  <div class="self-name">nest</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>Dss class</h5>
+    <ol>
+      <li class="section-title"><a href="dss/Dss-class.html#constructors">Constructors</a></li>
+      <li><a href="dss/Dss/Dss.html">Dss</a></li>
+      <li><a href="dss/Dss/Dss.map.html">map</a></li>
+    
+      <li class="section-title">
+        <a href="dss/Dss-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="dss/Dss/declarations.html">declarations</a></li>
+      <li><a href="dss/Dss/mediaRules.html">mediaRules</a></li>
+      <li><a href="dss/Dss/name.html">name</a></li>
+      <li><a href="dss/Dss/selector.html">selector</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="dss/Dss-class.html#instance-methods">Methods</a></li>
+      <li><a href="dss/Dss/compose.html">compose</a></li>
+      <li><a href="dss/Dss/debug.html">debug</a></li>
+      <li><a href="dss/Dss/flattenedRules.html">flattenedRules</a></li>
+      <li><a href="dss/Dss/media.html">media</a></li>
+      <li><a href="dss/Dss/nest.html">nest</a></li>
+      <li><a href="dss/Dss/register.html">register</a></li>
+      <li><a href="dss/Dss/select.html">select</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/add.html">add</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/addMap.html">addMap</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/shallowCompose.html">shallowCompose</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="dss/Dss-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>nest method</h1>
+
+    <section class="multi-line-signature">
+      <span class="returntype">void</span>
+      <span class="name ">nest</span>
+(<wbr><span class="parameter" id="nest-param-child"><span class="type-annotation"><a href="dss/Dss-class.html">Dss</a></span> <span class="parameter-name">child</span></span>)
+    </section>
+    <section class="desc markdown">
+      <p>Adds a child rule.</p>
+<p>This concept does not exist in CSS, but is extremely common in SCSS and other CSS preprocessors.</p>
+<p>The child selector can access the parent's selector via the special character <code>&amp;</code>.
+This makes it super easy to add pseudoclasses and more.</p>
+<p>Example:</p>
+<pre class="language-dart"><code class="language-dart">final box = new Dss()
+  ..add('color', 'red')
+  ..nest(Dss()
+    ..select('&amp;:hover')
+    ..add('color', 'blue'))
+  ..nest(Dss()
+    ..select('&gt; h5')
+    ..add('font-size', '20px')
+    ..nest(Dss()
+      ..select('.bigger &gt; &amp;')
+      ..add('font-size', '30px')));
+</code></pre>
+<p>Compiles to</p>
+<pre class="language-css"><code class="language-css">.box {
+  color: red;
+}
+
+.box:hover {
+  color: blue;
+}
+
+.box &gt; h5 {
+  font-size: 20px;
+}
+
+.bigger &gt; .box &gt; h5 {
+  font-size: 30px;
+}
+</code></pre>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">void nest(Dss child) {
+  final childSelector = child.selector;
+  if (!childSelector.contains(&#39;&amp;&#39;)) {
+    child.select(&#39;&amp; &#39; + childSelector);
+  }
+  _children ??= [];
+  _children.add(child);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    dss 0.0.1
+  </span>
+
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

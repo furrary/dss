@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the not method from the Media class, for the Dart programming language.">
+  <title>not method - Media class - dss library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">dss</a></li>
+    <li><a href="dss/dss-library.html">dss</a></li>
+    <li><a href="dss/Media-class.html">Media</a></li>
+    <li class="self-crumb">not method</li>
+  </ol>
+  <div class="self-name">not</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>Media class</h5>
+    <ol>
+      <li class="section-title"><a href="dss/Media-class.html#constructors">Constructors</a></li>
+      <li><a href="dss/Media/Media.html">Media</a></li>
+    
+      <li class="section-title">
+        <a href="dss/Media-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="dss/Media/declarations.html">declarations</a></li>
+      <li><a href="dss/Media/query.html">query</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="dss/Media-class.html#instance-methods">Methods</a></li>
+      <li><a href="dss/Media/all.html">all</a></li>
+      <li><a href="dss/Media/feat.html">feat</a></li>
+      <li><a href="dss/Media/height.html">height</a></li>
+      <li><a href="dss/Media/inquire.html">inquire</a></li>
+      <li><a href="dss/Media/landscape.html">landscape</a></li>
+      <li><a href="dss/Media/maxHeight.html">maxHeight</a></li>
+      <li><a href="dss/Media/maxWidth.html">maxWidth</a></li>
+      <li><a href="dss/Media/minHeight.html">minHeight</a></li>
+      <li><a href="dss/Media/minWidth.html">minWidth</a></li>
+      <li><a href="dss/Media/not.html">not</a></li>
+      <li><a href="dss/Media/or.html">or</a></li>
+      <li><a href="dss/Media/orQuery.html">orQuery</a></li>
+      <li><a href="dss/Media/portrait.html">portrait</a></li>
+      <li><a href="dss/Media/print.html">print</a></li>
+      <li><a href="dss/Media/screen.html">screen</a></li>
+      <li><a href="dss/Media/speech.html">speech</a></li>
+      <li><a href="dss/Media/width.html">width</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/add.html">add</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/addMap.html">addMap</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/shallowCompose.html">shallowCompose</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="dss/Media-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="extra/BlockBuilder/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>not method</h1>
+
+    <section class="multi-line-signature">
+      <span class="returntype">void</span>
+      <span class="name ">not</span>
+(<wbr>)
+    </section>
+    <section class="desc markdown">
+      <p>A syntactic sugar for <code>this.inquire(this.query + 'not ')</code>.</p>
+<p>Please note that after <code>not</code>, you need to spicify a [media type]<code></code>.</p>
+<p>[media type]<code></code>: https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">void not() {
+  _query += &#39;not &#39;;
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    dss 0.0.1
+  </span>
+
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
