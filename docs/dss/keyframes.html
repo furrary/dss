@@ -59,10 +59,11 @@
     <section class="multi-line-signature">
         <span class="returntype">String</span>
         <span class="name ">keyframes</span>
-(<wbr><span class="parameter" id="keyframes-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
+(<wbr><span class="parameter" id="keyframes-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span>, {</span> <span class="parameter" id="keyframes-param-prefix"><span class="type-annotation">String</span> <span class="parameter-name">prefix</span></span> })
     </section>
     <section class="desc markdown">
-      <p>Inserts a <code>@keyframes</code> rule and returns a unique name for the rule.</p>
+      <p>Inserts a <code>@keyframes</code> rule and returns a unique name for the animation.</p>
+<p>If <a href="config/isDev-constant.html">isDev</a> is <code>true</code>, <code>prefix</code> will be added before the generated animation name for the sake of debugging.</p>
 <pre class="language-dart"><code class="language-dart">final fontBulger = keyframes('''
   0%, 100% {
     font-size: 10px;
@@ -72,7 +73,7 @@
   }
 ''');
 
-querySelector('#output')
+querySelector('someSelector')
   ..className = dss('animation: $fontBulger 2s infinite')
   ..text = "Hello";
 </code></pre>
@@ -80,8 +81,11 @@ querySelector('#output')
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">String keyframes(String markup) {
+      <pre class="language-dart"><code class="language-dart">String keyframes(String markup, {String prefix}) {
   String name = generateUniqueName();
+  if (isDev &amp;&amp; prefix != null) {
+    name = prefix + name;
+  }
   sheet.add(&#39;@keyframes $name{$markup}&#39;);
   return name;
 }</code></pre>
@@ -96,7 +100,7 @@ querySelector('#output')
 
 <footer>
   <span class="no-break">
-    dss 0.1.0
+    dss 0.1.1
   </span>
 
 </footer>
