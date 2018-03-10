@@ -41,7 +41,6 @@
       <li class="section-title"><a href="index.html#libraries">Libraries</a></li>
       <li><a href="config/config-library.html">config</a></li>
       <li><a href="dss/dss-library.html">dss</a></li>
-      <li><a href="extra/extra-library.html">extra</a></li>
     </ol>
   </div>
 
@@ -49,39 +48,9 @@
     <h1>dss library</h1>
 
     <section class="desc markdown">
-      <p><a href="https://github.com/furrary/dss/blob/master/README.md">Examples of how this library might be used.</a></p>
+      <p>The main library of this package.</p>
     </section>
     
-    <section class="summary offset-anchor" id="classes">
-      <h2>Classes</h2>
-
-      <dl>
-        <dt id="Dss">
-          <span class="name "><a href="dss/Dss-class.html">Dss</a></span>
-        </dt>
-        <dd>
-          An abstraction over a CSS rule. <a href="dss/Dss-class.html">[...]</a>
-        </dd>
-        <dt id="Frame">
-          <span class="name "><a href="dss/Frame-class.html">Frame</a></span>
-        </dt>
-        <dd>
-          An abstraction over a step of the <a href="dss/Keyframes-class.html">Keyframes</a>.
-        </dd>
-        <dt id="Keyframes">
-          <span class="name "><a href="dss/Keyframes-class.html">Keyframes</a></span>
-        </dt>
-        <dd>
-          An abstraction over CSS <code>@keyframes</code>. <a href="dss/Keyframes-class.html">[...]</a>
-        </dd>
-        <dt id="Media">
-          <span class="name "><a href="dss/Media-class.html">Media</a></span>
-        </dt>
-        <dd>
-          A media rule builder. <a href="dss/Media-class.html">[...]</a>
-        </dd>
-      </dl>
-    </section>
 
 
 
@@ -89,13 +58,50 @@
       <h2>Functions</h2>
 
       <dl class="callables">
-        <dt id="importCss" class="callable">
-          <span class="name"><a href="dss/importCss.html">importCss</a></span><span class="signature">(<wbr><span class="parameter" id="importCss-param-url"><span class="type-annotation">String</span> <span class="parameter-name">url</span>, [</span> <span class="parameter" id="importCss-param-mediaQuery"><span class="type-annotation">String</span> <span class="parameter-name">mediaQuery</span> = <span class="default-value">'all'</span></span> ])
+        <dt id="dss" class="callable">
+          <span class="name"><a href="dss/dss.html">dss</a></span><span class="signature">(<wbr><span class="parameter" id="dss-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+        </dt>
+        <dd>
+          Inserts a CSS rule with the given declarations markup and
+returns a generated unique name to use as <code>className</code>. <a href="dss/dss.html">[...]</a>
+          
+</dd>
+        <dt id="fontFace" class="callable">
+          <span class="name"><a href="dss/fontFace.html">fontFace</a></span><span class="signature">(<wbr><span class="parameter" id="fontFace-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
             <span class="returntype parameter">&#8594; void</span>
           </span>
         </dt>
         <dd>
-          CSS's @import.
+          Inserts a <code>@font-face</code> rule. <a href="dss/fontFace.html">[...]</a>
+          
+</dd>
+        <dt id="global" class="callable">
+          <span class="name"><a href="dss/global.html">global</a></span><span class="signature">(<wbr><span class="parameter" id="global-param-selector"><span class="type-annotation">String</span> <span class="parameter-name">selector</span>, </span> <span class="parameter" id="global-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+        </dt>
+        <dd>
+          Inserts a CSS rule with the given selector and declarations markup. <a href="dss/global.html">[...]</a>
+          
+</dd>
+        <dt id="importCss" class="callable">
+          <span class="name"><a href="dss/importCss.html">importCss</a></span><span class="signature">(<wbr><span class="parameter" id="importCss-param-url"><span class="type-annotation">String</span> <span class="parameter-name">url</span>, [</span> <span class="parameter" id="importCss-param-mediaQuery"><span class="type-annotation">String</span> <span class="parameter-name">mediaQuery</span> = <span class="default-value">''</span></span> ])
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+        </dt>
+        <dd>
+          CSS's @import. <a href="dss/importCss.html">[...]</a>
+          
+</dd>
+        <dt id="keyframes" class="callable">
+          <span class="name"><a href="dss/keyframes.html">keyframes</a></span><span class="signature">(<wbr><span class="parameter" id="keyframes-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+        </dt>
+        <dd>
+          Inserts a <code>@keyframes</code> rule and returns a unique name for the rule. <a href="dss/keyframes.html">[...]</a>
           
 </dd>
       </dl>
@@ -109,16 +115,15 @@
   <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
     <h5>dss library</h5>
     <ol>
-      <li class="section-title"><a href="dss/dss-library.html#classes">Classes</a></li>
-      <li><a href="dss/Dss-class.html">Dss</a></li>
-      <li><a href="dss/Frame-class.html">Frame</a></li>
-      <li><a href="dss/Keyframes-class.html">Keyframes</a></li>
-      <li><a href="dss/Media-class.html">Media</a></li>
     
     
     
       <li class="section-title"><a href="dss/dss-library.html#functions">Functions</a></li>
+      <li><a href="dss/dss.html">dss</a></li>
+      <li><a href="dss/fontFace.html">fontFace</a></li>
+      <li><a href="dss/global.html">global</a></li>
       <li><a href="dss/importCss.html">importCss</a></li>
+      <li><a href="dss/keyframes.html">keyframes</a></li>
     
     
     
@@ -129,7 +134,7 @@
 
 <footer>
   <span class="no-break">
-    dss 0.0.1
+    dss 0.1.0
   </span>
 
 </footer>

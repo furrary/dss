@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the runtimeType property from the AbstractStyleSheet class, for the Dart programming language.">
-  <title>runtimeType property - AbstractStyleSheet class - config library - Dart API</title>
+  <meta name="description" content="API docs for the operator []= method from the BrowserStyleSheet class, for the Dart programming language.">
+  <title>operator []= method - BrowserStyleSheet class - config library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="../..">
 
@@ -25,10 +25,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="index.html">dss</a></li>
     <li><a href="config/config-library.html">config</a></li>
-    <li><a href="config/AbstractStyleSheet-class.html">AbstractStyleSheet</a></li>
-    <li class="self-crumb">runtimeType property</li>
+    <li><a href="config/BrowserStyleSheet-class.html">BrowserStyleSheet</a></li>
+    <li class="self-crumb">operator []= method</li>
   </ol>
-  <div class="self-name">runtimeType</div>
+  <div class="self-name">operator []=</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -37,26 +37,26 @@
 <main>
 
   <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
-    <h5>AbstractStyleSheet class</h5>
+    <h5>BrowserStyleSheet class</h5>
     <ol>
-      <li class="section-title"><a href="config/AbstractStyleSheet-class.html#constructors">Constructors</a></li>
-      <li><a href="config/AbstractStyleSheet/AbstractStyleSheet.html">AbstractStyleSheet</a></li>
+      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#constructors">Constructors</a></li>
+      <li><a href="config/BrowserStyleSheet/BrowserStyleSheet.html">BrowserStyleSheet</a></li>
     
       <li class="section-title inherited">
-        <a href="config/AbstractStyleSheet-class.html#instance-properties">Properties</a>
+        <a href="config/BrowserStyleSheet-class.html#instance-properties">Properties</a>
       </li>
       <li class="inherited"><a href="config/AbstractStyleSheet/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/runtimeType.html">runtimeType</a></li>
     
-      <li class="section-title"><a href="config/AbstractStyleSheet-class.html#instance-methods">Methods</a></li>
-      <li><a href="config/AbstractStyleSheet/add.html">add</a></li>
-      <li><a href="config/AbstractStyleSheet/addFirst.html">addFirst</a></li>
+      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#instance-methods">Methods</a></li>
+      <li><a href="config/BrowserStyleSheet/add.html">add</a></li>
+      <li><a href="config/BrowserStyleSheet/addFirst.html">addFirst</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/noSuchMethod.html">noSuchMethod</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/toString.html">toString</a></li>
     
-      <li class="section-title"><a href="config/AbstractStyleSheet-class.html#operators">Operators</a></li>
-      <li><a href="config/AbstractStyleSheet/operator_get.html">operator []</a></li>
-      <li><a href="config/AbstractStyleSheet/operator_put.html">operator []=</a></li>
+      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#operators">Operators</a></li>
+      <li><a href="config/BrowserStyleSheet/operator_get.html">operator []</a></li>
+      <li><a href="config/BrowserStyleSheet/operator_put.html">operator []=</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/operator_equals.html">operator ==</a></li>
     
     
@@ -65,26 +65,28 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>runtimeType property</h1>
+    <h1>operator []= method</h1>
 
+    <section class="multi-line-signature">
+      <div>
+        <ol class="annotation-list">
+          <li>@override</li>
+        </ol>
+      </div>
+      <span class="returntype">void</span>
+      <span class="name ">operator []=</span>
+(<wbr><span class="parameter" id="[]=-param-index"><span class="type-annotation">int</span> <span class="parameter-name">index</span>, </span> <span class="parameter" id="[]=-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
+    </section>
+    <section class="desc markdown">
+      <p>Sets a CSS rule at the given index.</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">@override
+operator []=(int index, String rule) =&gt; _sheet.cssRules[index].cssText = rule;</code></pre>
+    </section>
 
-        <section id="getter">
-        
-        <section class="multi-line-signature">
-          <span class="returntype">Type</span>
-          <span class="name ">runtimeType</span>
-  <div class="features">inherited</div>
-</section>
-        
-        <section class="desc markdown">
-  <p>A representation of the runtime type of the object.</p>
-</section>
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span> </h2>
-  <pre class="language-dart"><code class="language-dart">external Type get runtimeType;</code></pre>
-</section>
-</section>
-        
   </div> <!-- /.main-content -->
 
   <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">

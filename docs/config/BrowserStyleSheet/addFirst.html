@@ -54,7 +54,9 @@
       <li class="inherited"><a href="config/AbstractStyleSheet/noSuchMethod.html">noSuchMethod</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/toString.html">toString</a></li>
     
-      <li class="section-title inherited"><a href="config/BrowserStyleSheet-class.html#operators">Operators</a></li>
+      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#operators">Operators</a></li>
+      <li><a href="config/BrowserStyleSheet/operator_get.html">operator []</a></li>
+      <li><a href="config/BrowserStyleSheet/operator_put.html">operator []=</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/operator_equals.html">operator ==</a></li>
     
     
@@ -77,13 +79,18 @@
     </section>
     <section class="desc markdown">
       <p>Inserts a CSS rule at the beginning of this stylesheet.</p>
+<p>This is useful for <code>@import</code> rules.</p>
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
       <pre class="language-dart"><code class="language-dart">@override
 void addFirst(String rule) {
-  _sheet.insertRule(rule, 0);
+  if (!isDev) {
+    _sheet.insertRule(rule, 0);
+  } else {
+    _styleEl.insertBefore(new Text(rule), _styleEl.firstChild);
+  }
   _ruleCounter++;
 }</code></pre>
     </section>
@@ -97,7 +104,7 @@ void addFirst(String rule) {
 
 <footer>
   <span class="no-break">
-    dss 0.0.1
+    dss 0.1.0
   </span>
 
 </footer>

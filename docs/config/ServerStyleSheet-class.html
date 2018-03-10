@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the BrowserStyleSheet class from the config library, for the Dart programming language.">
-  <title>BrowserStyleSheet class - config library - Dart API</title>
+  <meta name="description" content="API docs for the ServerStyleSheet class from the config library, for the Dart programming language.">
+  <title>ServerStyleSheet class - config library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="..">
 
@@ -25,9 +25,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="index.html">dss</a></li>
     <li><a href="config/config-library.html">config</a></li>
-    <li class="self-crumb">BrowserStyleSheet class</li>
+    <li class="self-crumb">ServerStyleSheet class</li>
   </ol>
-  <div class="self-name">BrowserStyleSheet</div>
+  <div class="self-name">ServerStyleSheet</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -62,12 +62,12 @@
   </div>
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>BrowserStyleSheet class</h1>
+    <h1>ServerStyleSheet class</h1>
 
     <section class="desc markdown">
-      <p>A stylesheet which will insert rules into a <code>&lt;style&gt;</code> tag.</p>
-<p>This is a low-level API and only accepts a valid CSS rule, so nested rules won't be accpeted.</p>
-<p>This utilizes the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule"><code>CSSStyleSheet.insertRule</code></a> in production mode.</p>
+      <p>A stylesheet which will concatenate rules into a string that can be used for server-side rendering.</p>
+<p>Since, right now, there is no Dart web framework that is capable of server-side rendering,
+this is useless.</p>
     </section>
     
     <section>
@@ -76,7 +76,7 @@
         <dd><ul class="gt-separated dark clazz-relationships">
           <li>Object</li>
           <li><a href="config/AbstractStyleSheet-class.html">AbstractStyleSheet</a></li>
-          <li>BrowserStyleSheet</li>
+          <li>ServerStyleSheet</li>
         </ul></dd>
 
 
@@ -89,8 +89,8 @@
       <h2>Constructors</h2>
 
       <dl class="constructor-summary-list">
-        <dt id="BrowserStyleSheet" class="callable">
-          <span class="name"><a href="config/BrowserStyleSheet/BrowserStyleSheet.html">BrowserStyleSheet</a></span><span class="signature">()</span>
+        <dt id="ServerStyleSheet" class="callable">
+          <span class="name"><a href="config/ServerStyleSheet/ServerStyleSheet.html">ServerStyleSheet</a></span><span class="signature">()</span>
         </dt>
         <dd>
           
@@ -125,7 +125,7 @@
       <h2>Methods</h2>
       <dl class="callables">
         <dt id="add" class="callable">
-          <span class="name"><a href="config/BrowserStyleSheet/add.html">add</a></span><span class="signature">(<wbr><span class="parameter" id="add-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
+          <span class="name"><a href="config/ServerStyleSheet/add.html">add</a></span><span class="signature">(<wbr><span class="parameter" id="add-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
             <span class="returntype parameter">&#8594; void</span>
           </span>
         </dt>
@@ -134,12 +134,12 @@
           
 </dd>
         <dt id="addFirst" class="callable">
-          <span class="name"><a href="config/BrowserStyleSheet/addFirst.html">addFirst</a></span><span class="signature">(<wbr><span class="parameter" id="addFirst-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
+          <span class="name"><a href="config/ServerStyleSheet/addFirst.html">addFirst</a></span><span class="signature">(<wbr><span class="parameter" id="addFirst-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
             <span class="returntype parameter">&#8594; void</span>
           </span>
         </dt>
         <dd>
-          Inserts a CSS rule at the beginning of this stylesheet. <a href="config/BrowserStyleSheet/addFirst.html">[...]</a>
+          Inserts a CSS rule at the beginning of this stylesheet. <a href="config/ServerStyleSheet/addFirst.html">[...]</a>
           
 </dd>
         <dt id="noSuchMethod" class="callable inherited">
@@ -167,7 +167,7 @@
       <h2>Operators</h2>
       <dl class="callables">
         <dt id="operator []" class="callable">
-          <span class="name"><a href="config/BrowserStyleSheet/operator_get.html">operator []</a></span><span class="signature">(<wbr><span class="parameter" id="[]-param-index"><span class="type-annotation">int</span> <span class="parameter-name">index</span></span>)
+          <span class="name"><a href="config/ServerStyleSheet/operator_get.html">operator []</a></span><span class="signature">(<wbr><span class="parameter" id="[]-param-index"><span class="type-annotation">int</span> <span class="parameter-name">index</span></span>)
             <span class="returntype parameter">&#8594; String</span>
           </span>
         </dt>
@@ -176,7 +176,7 @@
           
 </dd>
         <dt id="operator []=" class="callable">
-          <span class="name"><a href="config/BrowserStyleSheet/operator_put.html">operator []=</a></span><span class="signature">(<wbr><span class="parameter" id="[]=-param-index"><span class="type-annotation">int</span> <span class="parameter-name">index</span>, </span> <span class="parameter" id="[]=-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
+          <span class="name"><a href="config/ServerStyleSheet/operator_put.html">operator []=</a></span><span class="signature">(<wbr><span class="parameter" id="[]=-param-index"><span class="type-annotation">int</span> <span class="parameter-name">index</span>, </span> <span class="parameter" id="[]=-param-rule"><span class="type-annotation">String</span> <span class="parameter-name">rule</span></span>)
             <span class="returntype parameter">&#8594; void</span>
           </span>
         </dt>
@@ -203,24 +203,24 @@
 
   <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
     <ol>
-      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#constructors">Constructors</a></li>
-      <li><a href="config/BrowserStyleSheet/BrowserStyleSheet.html">BrowserStyleSheet</a></li>
+      <li class="section-title"><a href="config/ServerStyleSheet-class.html#constructors">Constructors</a></li>
+      <li><a href="config/ServerStyleSheet/ServerStyleSheet.html">ServerStyleSheet</a></li>
     
       <li class="section-title inherited">
-        <a href="config/BrowserStyleSheet-class.html#instance-properties">Properties</a>
+        <a href="config/ServerStyleSheet-class.html#instance-properties">Properties</a>
       </li>
       <li class="inherited"><a href="config/AbstractStyleSheet/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/runtimeType.html">runtimeType</a></li>
     
-      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#instance-methods">Methods</a></li>
-      <li><a href="config/BrowserStyleSheet/add.html">add</a></li>
-      <li><a href="config/BrowserStyleSheet/addFirst.html">addFirst</a></li>
+      <li class="section-title"><a href="config/ServerStyleSheet-class.html#instance-methods">Methods</a></li>
+      <li><a href="config/ServerStyleSheet/add.html">add</a></li>
+      <li><a href="config/ServerStyleSheet/addFirst.html">addFirst</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/noSuchMethod.html">noSuchMethod</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/toString.html">toString</a></li>
     
-      <li class="section-title"><a href="config/BrowserStyleSheet-class.html#operators">Operators</a></li>
-      <li><a href="config/BrowserStyleSheet/operator_get.html">operator []</a></li>
-      <li><a href="config/BrowserStyleSheet/operator_put.html">operator []=</a></li>
+      <li class="section-title"><a href="config/ServerStyleSheet-class.html#operators">Operators</a></li>
+      <li><a href="config/ServerStyleSheet/operator_get.html">operator []</a></li>
+      <li><a href="config/ServerStyleSheet/operator_put.html">operator []=</a></li>
       <li class="inherited"><a href="config/AbstractStyleSheet/operator_equals.html">operator ==</a></li>
     
     

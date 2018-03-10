@@ -41,7 +41,6 @@
       <li class="section-title"><a href="index.html#libraries">Libraries</a></li>
       <li><a href="config/config-library.html">config</a></li>
       <li><a href="dss/dss-library.html">dss</a></li>
-      <li><a href="extra/extra-library.html">extra</a></li>
     </ol>
   </div>
 
@@ -49,16 +48,15 @@
     <h1>config library</h1>
 
     <section class="desc markdown">
-      <p>This library lets you change the way CSS rule is inserted into the DOM and change how unique class names are generated.</p>
-<pre class="language-dart"><code class="language-dart">import 'package:dss/config.dart';
+      <p>This library lets you change the way CSS rule is inserted into the DOM
+and change how unique class names are generated.</p>
+<p>The config needs to be done before any function in this package is called.</p>
+<pre class="language-dart"><code class="language-dart">import 'config.dart' as config;
 
-class AwesomeNameGenerator extends NameGenerator {
-  @override
-  String generate() =&gt; 'awesome';
-}
+String generateAwesomeName() =&gt; 'awesome';
 
 void main() {
-  Config.nameGenerator = new AwesomeNameGenerator();
+  config.generateUniqueName = generateAwesomeName;
 }
 </code></pre>
     </section>
@@ -79,37 +77,99 @@ void main() {
         <dd>
           A stylesheet which will insert rules into a <code>&lt;style&gt;</code> tag. <a href="config/BrowserStyleSheet-class.html">[...]</a>
         </dd>
-        <dt id="Config">
-          <span class="name "><a href="config/Config-class.html">Config</a></span>
+        <dt id="ServerStyleSheet">
+          <span class="name "><a href="config/ServerStyleSheet-class.html">ServerStyleSheet</a></span>
         </dt>
         <dd>
-          
-        </dd>
-        <dt id="IncrementalNameGenerator">
-          <span class="name "><a href="config/IncrementalNameGenerator-class.html">IncrementalNameGenerator</a></span>
-        </dt>
-        <dd>
-          The default <a href="config/NameGenerator-class.html">NameGenerator</a>. <a href="config/IncrementalNameGenerator-class.html">[...]</a>
-        </dd>
-        <dt id="NameGenerator">
-          <span class="name "><a href="config/NameGenerator-class.html">NameGenerator</a></span>
-        </dt>
-        <dd>
-          An interface for a unique name generator used by <code>Dss</code>. <a href="config/NameGenerator-class.html">[...]</a>
-        </dd>
-        <dt id="StringStyleSheet">
-          <span class="name "><a href="config/StringStyleSheet-class.html">StringStyleSheet</a></span>
-        </dt>
-        <dd>
-          A stylesheet which will concatenate rules into a string that can be used for server-side rendering. <a href="config/StringStyleSheet-class.html">[...]</a>
+          A stylesheet which will concatenate rules into a string that can be used for server-side rendering. <a href="config/ServerStyleSheet-class.html">[...]</a>
         </dd>
       </dl>
     </section>
 
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+        <dt id="isDev" class="constant">
+          <span class="name "><a href="config/isDev-constant.html">isDev</a></span>
+          <span class="signature">&#8594; const bool</span>
+        </dt>
+        <dd>
+          Determine if the web is running in production mode or not. <a href="config/isDev-constant.html">[...]</a>
+          
+  <div>
+            <span class="signature"><code>const String.fromEnvironment(&#39;dss&#39;) != &#39;prod&#39;</code></span>
+          </div>
+        </dd>
+        <dt id="isServer" class="constant">
+          <span class="name "><a href="config/isServer-constant.html">isServer</a></span>
+          <span class="signature">&#8594; const bool</span>
+        </dt>
+        <dd>
+          Determine if DSS is running on the server. <a href="config/isServer-constant.html">[...]</a>
+          
+  <div>
+            <span class="signature"><code>const String.fromEnvironment(&#39;dss&#39;) == &#39;server&#39;</code></span>
+          </div>
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="generateUniqueName" class="property">
+          <span class="name"><a href="config/generateUniqueName.html">generateUniqueName</a></span>
+          <span class="signature">&#8596; <a href="config/NameGenerator.html">NameGenerator</a></span>
+        </dt>
+        <dd>
+          A unique class name generator which will be used across the library. <a href="config/generateUniqueName.html">[...]</a>
+          <div class="features">read / write</div>
+</dd>
+        <dt id="sheet" class="property">
+          <span class="name"><a href="config/sheet.html">sheet</a></span>
+          <span class="signature">&#8596; <a href="config/AbstractStyleSheet-class.html">AbstractStyleSheet</a></span>
+        </dt>
+        <dd>
+          An <code>AbstractStyleSheet</code> which will be used to manipulate CSS styles across the library. <a href="config/sheet.html">[...]</a>
+          <div class="features">read / write</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+
+      <dl class="callables">
+        <dt id="generateIncrementalName" class="callable">
+          <span class="name"><a href="config/generateIncrementalName.html">generateIncrementalName</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+        </dt>
+        <dd>
+          The default <a href="config/NameGenerator.html">NameGenerator</a>. <a href="config/generateIncrementalName.html">[...]</a>
+          
+</dd>
+      </dl>
+    </section>
 
 
+    <section class="summary offset-anchor" id="typedefs">
+      <h2>Typedefs</h2>
 
-
+      <dl class="callables">
+        <dt id="NameGenerator" class="callable">
+          <span class="name"><a href="config/NameGenerator.html">NameGenerator</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+        </dt>
+        <dd>
+          An interface for a unique class name generator.
+          
+</dd>
+      </dl>
+    </section>
 
 
   </div> <!-- /.main-content -->
@@ -120,15 +180,22 @@ void main() {
       <li class="section-title"><a href="config/config-library.html#classes">Classes</a></li>
       <li><a href="config/AbstractStyleSheet-class.html">AbstractStyleSheet</a></li>
       <li><a href="config/BrowserStyleSheet-class.html">BrowserStyleSheet</a></li>
-      <li><a href="config/Config-class.html">Config</a></li>
-      <li><a href="config/IncrementalNameGenerator-class.html">IncrementalNameGenerator</a></li>
-      <li><a href="config/NameGenerator-class.html">NameGenerator</a></li>
-      <li><a href="config/StringStyleSheet-class.html">StringStyleSheet</a></li>
+      <li><a href="config/ServerStyleSheet-class.html">ServerStyleSheet</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#constants">Constants</a></li>
+      <li><a href="config/isDev-constant.html">isDev</a></li>
+      <li><a href="config/isServer-constant.html">isServer</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#properties">Properties</a></li>
+      <li><a href="config/generateUniqueName.html">generateUniqueName</a></li>
+      <li><a href="config/sheet.html">sheet</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#functions">Functions</a></li>
+      <li><a href="config/generateIncrementalName.html">generateIncrementalName</a></li>
     
     
-    
-    
-    
+      <li class="section-title"><a href="config/config-library.html#typedefs">Typedefs</a></li>
+      <li><a href="config/NameGenerator.html">NameGenerator</a></li>
     
     </ol>
   </div><!--/sidebar-offcanvas-right-->
@@ -137,7 +204,7 @@ void main() {
 
 <footer>
   <span class="no-break">
-    dss 0.0.1
+    dss 0.1.0
   </span>
 
 </footer>

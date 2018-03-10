@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the importCss function from the dss library, for the Dart programming language.">
-  <title>importCss function - dss library - Dart API</title>
+  <meta name="description" content="API docs for the NameGenerator property from the config library, for the Dart programming language.">
+  <title>NameGenerator typedef - config library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="..">
 
@@ -24,10 +24,10 @@
   <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="index.html">dss</a></li>
-    <li><a href="dss/dss-library.html">dss</a></li>
-    <li class="self-crumb">importCss function</li>
+    <li><a href="config/config-library.html">config</a></li>
+    <li class="self-crumb">NameGenerator typedef</li>
   </ol>
-  <div class="self-name">importCss</div>
+  <div class="self-name">NameGenerator</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -36,46 +36,44 @@
 <main>
 
   <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
-    <h5>dss library</h5>
+    <h5>config library</h5>
     <ol>
+      <li class="section-title"><a href="config/config-library.html#classes">Classes</a></li>
+      <li><a href="config/AbstractStyleSheet-class.html">AbstractStyleSheet</a></li>
+      <li><a href="config/BrowserStyleSheet-class.html">BrowserStyleSheet</a></li>
+      <li><a href="config/ServerStyleSheet-class.html">ServerStyleSheet</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#constants">Constants</a></li>
+      <li><a href="config/isDev-constant.html">isDev</a></li>
+      <li><a href="config/isServer-constant.html">isServer</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#properties">Properties</a></li>
+      <li><a href="config/generateUniqueName.html">generateUniqueName</a></li>
+      <li><a href="config/sheet.html">sheet</a></li>
+    
+      <li class="section-title"><a href="config/config-library.html#functions">Functions</a></li>
+      <li><a href="config/generateIncrementalName.html">generateIncrementalName</a></li>
     
     
-    
-      <li class="section-title"><a href="dss/dss-library.html#functions">Functions</a></li>
-      <li><a href="dss/dss.html">dss</a></li>
-      <li><a href="dss/fontFace.html">fontFace</a></li>
-      <li><a href="dss/global.html">global</a></li>
-      <li><a href="dss/importCss.html">importCss</a></li>
-      <li><a href="dss/keyframes.html">keyframes</a></li>
-    
-    
+      <li class="section-title"><a href="config/config-library.html#typedefs">Typedefs</a></li>
+      <li><a href="config/NameGenerator.html">NameGenerator</a></li>
     
     </ol>
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>importCss function</h1>
+    <h1>NameGenerator typedef</h1>
 
     <section class="multi-line-signature">
-        <span class="returntype">void</span>
-        <span class="name ">importCss</span>
-(<wbr><span class="parameter" id="importCss-param-url"><span class="type-annotation">String</span> <span class="parameter-name">url</span>, [</span> <span class="parameter" id="importCss-param-mediaQuery"><span class="type-annotation">String</span> <span class="parameter-name">mediaQuery</span> = <span class="default-value">''</span></span> ])
+        <span class="returntype">String</span>
+        <span class="name ">NameGenerator</span>
+(<wbr>)
     </section>
+
     <section class="desc markdown">
-      <p>CSS's @import.</p>
-<pre class="language-dart"><code class="language-dart">importCss("url('https://fonts.googleapis.com/css?family=Roboto')", 'screen');
-</code></pre>
+      <p>An interface for a unique class name generator.</p>
     </section>
-    
-    <section class="summary source-code" id="source">
-      <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">void importCss(String url, [String mediaQuery = &#39;&#39;]) {
-  if (!url.startsWith(url) &amp;&amp; !url.startsWith(&#39;&quot;&#39;) &amp;&amp; !url.startsWith(&quot;&#39;&quot;)) {
-    url = &#39;&quot;$url&quot;&#39;;
-  }
-  sheet.addFirst(&#39;@import $url $mediaQuery;&#39;);
-}</code></pre>
-    </section>
+        
 
   </div> <!-- /.main-content -->
 
