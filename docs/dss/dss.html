@@ -59,15 +59,19 @@
     <section class="multi-line-signature">
         <span class="returntype">String</span>
         <span class="name ">dss</span>
-(<wbr><span class="parameter" id="dss-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
+(<wbr><span class="parameter" id="dss-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span>, {</span> <span class="parameter" id="dss-param-prefix"><span class="type-annotation">String</span> <span class="parameter-name">prefix</span></span> })
     </section>
     <section class="desc markdown">
       <p>Inserts a CSS rule with the given declarations markup and
 returns a generated unique name to use as <code>className</code>.</p>
+<p>If <a href="config/isDev-constant.html">isDev</a> is <code>true</code>, <code>prefix</code> will be added before the generated class name for the sake of debugging.</p>
 <p>The examples show how you would use this function.</p>
-<pre class="language-dart"><code class="language-dart">querySelector('someSelector').className = dss(''
-    'color: red;'
-    'font-size: 12px;');
+<pre class="language-dart"><code class="language-dart">querySelector('someSelector')
+  ..className = dss(
+      'color: red;'
+      'font-size: 100px;',
+      prefix: 'big-red-')
+  ..text = "Hello";
 </code></pre>
 <pre class="language-dart"><code class="language-dart">final forIpad = '@media (min-width: 768px) and (max-width: 1024px)';
 final box = dss('''
@@ -88,8 +92,11 @@ void main() {
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">String dss(String markup) {
+      <pre class="language-dart"><code class="language-dart">String dss(String markup, {String prefix}) {
   String name = generateUniqueName();
+  if (isDev &amp;&amp; prefix != null) {
+    name = prefix + name;
+  }
   parseAndInsert(&#39;.$name&#39;, markup);
   return name;
 }</code></pre>
@@ -104,7 +111,7 @@ void main() {
 
 <footer>
   <span class="no-break">
-    dss 0.1.0
+    dss 0.1.1
   </span>
 
 </footer>

@@ -13,12 +13,6 @@ abstract class AbstractStyleSheet {
   ///
   /// This is useful for `@import` rules.
   void addFirst(String rule);
-
-  /// Returns a CSS rule located at the given index.
-  String operator [](int index);
-
-  /// Sets a CSS rule at the given index.
-  operator []=(int index, String rule);
 }
 
 /// A stylesheet which will insert rules into a `<style>` tag.
@@ -54,12 +48,6 @@ class BrowserStyleSheet extends AbstractStyleSheet {
     _ruleCounter++;
   }
 
-  @override
-  String operator [](int index) => _sheet.cssRules[index].cssText;
-
-  @override
-  operator []=(int index, String rule) => _sheet.cssRules[index].cssText = rule;
-
   final _styleEl = new StyleElement()
     ..type = 'text/css'
     ..setAttribute('data-dss', '')
@@ -84,17 +72,6 @@ class ServerStyleSheet extends AbstractStyleSheet {
 
   @override
   void addFirst(String rule) {
-    _unimplemented();
-  }
-
-  @override
-  String operator [](int index) {
-    _unimplemented();
-    return '';
-  }
-
-  @override
-  void operator []=(int index, String rule) {
     _unimplemented();
   }
 

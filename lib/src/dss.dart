@@ -24,11 +24,16 @@ void global(String selector, String markup) {
 /// Inserts a CSS rule with the given declarations markup and
 /// returns a generated unique name to use as `className`.
 ///
+/// If [isDev] is `true`, [prefix] will be added before the generated class name for the sake of debugging.
+///
 /// The examples show how you would use this function.
 /// ```dart
-/// querySelector('someSelector').className = dss(''
-///     'color: red;'
-///     'font-size: 12px;');
+/// querySelector('someSelector')
+///   ..className = dss(
+///       'color: red;'
+///       'font-size: 100px;',
+///       prefix: 'big-red-')
+///   ..text = "Hello";
 /// ```
 ///
 /// ```dart
@@ -47,8 +52,11 @@ void global(String selector, String markup) {
 ///     ..text = 'I\'m normally red, but turn blue on an iPad.';
 /// }
 /// ```
-String dss(String markup) {
+String dss(String markup, {String prefix}) {
   String name = generateUniqueName();
+  if (isDev && prefix != null) {
+    name = prefix + name;
+  }
   parseAndInsert('.$name', markup);
   return name;
 }
@@ -65,7 +73,9 @@ void importCss(String url, [String mediaQuery = '']) {
   sheet.addFirst('@import $url $mediaQuery;');
 }
 
-/// Inserts a `@keyframes` rule and returns a unique name for the rule.
+/// Inserts a `@keyframes` rule and returns a unique name for the animation.
+///
+/// If [isDev] is `true`, [prefix] will be added before the generated animation name for the sake of debugging.
 ///
 /// ```dart
 /// final fontBulger = keyframes('''
@@ -77,12 +87,15 @@ void importCss(String url, [String mediaQuery = '']) {
 ///   }
 /// ''');
 ///
-/// querySelector('#output')
+/// querySelector('someSelector')
 ///   ..className = dss('animation: $fontBulger 2s infinite')
 ///   ..text = "Hello";
 /// ```
-String keyframes(String markup) {
+String keyframes(String markup, {String prefix}) {
   String name = generateUniqueName();
+  if (isDev && prefix != null) {
+    name = prefix + name;
+  }
   sheet.add('@keyframes $name{$markup}');
   return name;
 }
