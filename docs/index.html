@@ -39,7 +39,6 @@
       <li class="section-title"><a href="index.html#libraries">Libraries</a></li>
       <li><a href="config/config-library.html">config</a></li>
       <li><a href="dss/dss-library.html">dss</a></li>
-      <li><a href="extra/extra-library.html">extra</a></li>
     </ol>
   </div>
 
@@ -50,8 +49,7 @@
 <p>In the JavaScript community, there's a growing trend towards CSS in JS.
 It has some pros and, certainly, cons, but I won't point that out here because tons of great articles out there have already done that.</p>
 <p>To my knowledge, at the time I wrote this, there's no library to do CSS in Dart yet. So, there you go, the first library of its kind.</p>
-<p>I want this library to utilize as many Dart's benefits as possible. Those include <a href="https://github.com/dart-lang/sdk/blob/master/docs/language/informal/optional-new-const.md">optional new</a>, method cascades and <code>dart2js</code>'s tree shaking. Thus, I decide not to use <a href="https://pub.dartlang.org/packages/js"><code>package:js</code></a> because, yeah, it won't be darty enough.</p>
-<p>The APIs may not be as magical as JS because, since the introduction of strong mode, Dart is not a dynamic language anymore. You inevitably need more boilerplates to accomplish the same thing. If you have an idea of how to improve these APIs, feel free to file an issue or create a better library. If you do create a new library, please tell me. I want to use it as well :)</p>
+<p>This library is lightweight and platform agnostic. It doesn't do anything special. It doesn't auto-prefix your rules. It doesn't have some sophisticated cache. It just enables you to write CSS in Dart.</p>
 <p><em><a href="https://www.dartdocs.org/">dartdocs.org</a> uses Dart 1.x SDK to generate docs and fails to build, so I need to build the <a href="https://furrary.github.io/dss/">docs</a> myself.</em></p>
 <h2>Usage</h2>
 <h3>Regular Rule</h3>
@@ -62,12 +60,13 @@ It has some pros and, certainly, cons, but I won't point that out here because t
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">querySelector('someSelector').className = (Dss() // Dart2's optional new
-      ..add('color', 'red')
-      ..add('font-size', '12px'))
-    .name;
+<pre class="language-dart"><code class="language-dart">querySelector('someSelector').className = dss(''
+    'color: red;'
+    'font-size: 12px;');
 </code></pre>
+<p><code>dss</code> will generate a unique class name for your rule, parse the rule and insert it into a <code>&lt;style&gt;</code> tag.</p>
 <h3>Global Rule</h3>
+<p>You might need to specify the selector yourself.</p>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">html,
 body {
@@ -75,12 +74,11 @@ body {
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">Dss()
-  ..select('html, body')
-  ..add('padding', '0')
-  ..register();
+<pre class="language-dart"><code class="language-dart">global(
+  'html, body',
+  'padding: 0;',
+);
 </code></pre>
-<p>You need to call <code>register()</code>, otherwise the library will never know if you are done with the rule declaration or not, and the rule won't be inserted.</p>
 <h3>Nesting and Pseudoclasses</h3>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">.box {
@@ -100,19 +98,23 @@ body {
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">final box = new Dss()
-  ..add('color', 'red')
-  ..nest(Dss()
-    ..select('&amp;:hover')
-    ..add('color', 'blue'))
-  ..nest(Dss()
-    ..select('&gt; h5')
-    ..add('font-size', '20px')
-    ..nest(Dss()
-      ..select('.bigger &gt; &amp;')
-      ..add('font-size', '30px')));
+<pre class="language-dart"><code class="language-dart">final box = dss('''
+  color: red;
+
+  &amp;:hover {
+    color: blue;
+  }
+
+  &gt; h5 {
+    font-size: 20px;
+  }
+
+  .bigger &gt; &amp; &gt; h5 {
+    font-size: 30px;
+  }
+''');
 </code></pre>
-<p>If you don't specify the selector for a <code>Dss</code> instance, it will have a unique class name. So, the concept of nesting might not be that important anymore, except for pseudoclasses, markups and legacy CSS interops.</p>
+<p><code>dss</code> can generate a unique class name for you, so the concept of nesting might not be that important anymore, except for pseudoclasses, markups and legacy CSS interops.</p>
 <h3>Fallback Values</h3>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">.box {
@@ -122,15 +124,9 @@ body {
 </code></pre>
 <p>DSS</p>
 <pre class="language-dart"><code class="language-dart">// There's nothing special here.
-final box = new Dss()..add('color','purple')..add('color', 'rebeccapurple');
-</code></pre>
-<p>It can be a bit more declarative, but, IMO, needs some unnecessary parsing.</p>
-<pre class="language-dart"><code class="language-dart">final box = new Dss()
-  ..addMap({
-    'color': 'rebeccapurple'
-  }, fallback: {
-    'color': ['purple']
-  });
+final box = dss(''
+    'color: purple;'
+    'color: rebeccapurple;');
 </code></pre>
 <h3>Media Queries <code>@media</code></h3>
 <p>CSS</p>
@@ -145,23 +141,15 @@ final box = new Dss()..add('color','purple')..add('color', 'rebeccapurple');
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">final box = new Dss()
-  ..add('color', 'red')
-  ..media(Media()
-    ..inquire('(min-width: 768px) and (max-width: 1024px)')
-    ..add('color', 'blue'));
-</code></pre>
-<p>or</p>
-<pre class="language-dart"><code class="language-dart">Media forIpad() =&gt; Media()
-  ..minWidth('768px')
-  ..maxWidth('1024px');
+<pre class="language-dart"><code class="language-dart">final forIpad = '@media (min-width: 768px) and (max-width: 1024px)';
+final box = dss('''
+  color: red;
 
-final box = new Dss()
-  ..add('color', 'red')
-  ..media(forIpad()
-    ..add('color', 'blue'));
+  $forIpad {
+    color: blue;
+  }
+''');
 </code></pre>
-<p>Caution: <code>minWidth</code> and <code>maxWidth</code> implementations are just string concatenations. Do not think it does some magical stuff. You need to understand how to write a correct <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries">media query</a> anyway.</p>
 <h3>Font Face <code>@font-face</code></h3>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">@font-face {
@@ -171,16 +159,12 @@ final box = new Dss()
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">Dss()
-  ..select('@font-face')
-  ..add('font-family', 'Open Sans')
-  ..add(
-      'src',
-      'url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),'
-      'url("/fonts/OpenSans-Regular-webfont.woff") format("woff")')
-  ..register();
+<pre class="language-dart"><code class="language-dart">fontFace('''
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
+       url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+''');
 </code></pre>
-<p>To my knowledge, <code>@font-face</code> is just a global rule. If there's anything special about <code>@font-face</code> that you can't deal with, please file an issue.</p>
 <h3>Keyframes <code>@keyframes</code></h3>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">@keyframes fontbulger {
@@ -198,29 +182,35 @@ final box = new Dss()
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">final fontBulger = new Keyframes()
-  ..add(Frame.list([0, 100])..add('font-size', '10px'))
-  ..add(Frame(50)..add('font-size', '12px'));
+<pre class="language-dart"><code class="language-dart">final fontBulger = keyframes('''
+  0%,
+  100% {
+    font-size: 10px;
+  }
+  50% {
+    font-size: 12px;
+  }
+''');
 
-querySelector('querySelector')
-  ..className =
-      (Dss()..add('animation', '${fontBulger.name} 2s infinite')).name
+querySelector('someSelector')
+  ..className = dss('animation: $fontBulger 2s infinite;')
+  ..text = "Hello";
 </code></pre>
 <h3>Import <code>@import</code></h3>
 <p>CSS</p>
 <pre class="language-css"><code class="language-css">@import url("https://fonts.googleapis.com/css?family=Roboto") screen;
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">importCss("url('https://fonts.googleapis.com/css?family=Roboto')",
-    (Media()..screen()).query);
+<pre class="language-dart"><code class="language-dart">importCss("url('https://fonts.googleapis.com/css?family=Roboto')", 'screen');
 </code></pre>
 <h3>Supports <code>@supports</code></h3>
 <p>Just use the native <a href="https://api.dartlang.org/dev/dart-html/Css/supports.html"><code>Css.supports</code></a> and <a href="https://api.dartlang.org/dev/dart-html/Css/supportsCondition.html"><code>Css.supportsCondition</code></a>.</p>
 <h3>Theming</h3>
-<pre class="language-dart"><code class="language-dart">Dss themedClass(String primaryColor, String textColor) =&gt;
-    Dss()..add('color', textColor)..add('background-color', primaryColor);
+<pre class="language-dart"><code class="language-dart">String themedClass(String primaryColor, String textColor) =&gt; dss('''
+  color: $textColor;
+  background-color: $primaryColor;
+''');
 </code></pre>
-<p>Theming is pretty easy with a factory function :)</p>
 <p>Moreover, it can be more reusable with cache.</p>
 <pre class="language-dart"><code class="language-dart">class Theme {
   String primaryColor;
@@ -228,16 +218,16 @@ querySelector('querySelector')
   Theme(this.primaryColor, this.textColor);
 }
 
-final cache = new Expando&lt;Dss&gt;();
+final cache = new Expando&lt;String&gt;();
 
 ButtonElement themedButton(Theme theme, [String text = 'Click!']) {
   if (cache[theme] == null) {
-    cache[theme] = Dss()
-      ..add('color', theme.textColor)
-      ..add('background-color', theme.primaryColor);
+    cache[theme] = dss(''
+        'color: ${theme.textColor};'
+        'background-color: ${theme.primaryColor};');
   }
-  return ButtonElement()
-    ..className = cache[theme].name
+  return new ButtonElement()
+    ..className = cache[theme]
     ..text = text;
 }
 
@@ -274,38 +264,39 @@ void main() {
 }
 </code></pre>
 <p>DSS</p>
-<pre class="language-dart"><code class="language-dart">final redWhenHovered = new Dss()
-  ..nest(Dss()
-    ..select('&amp;:hover')
-    ..add('color', 'red'));
-
-final blue = new Dss()
-  ..add('color', 'blue')
-  ..compose(redWhenHovered);
-
-final green = new Dss()
-  ..add('color', 'green')
-  ..compose(redWhenHovered);
-</code></pre>
-<h3>Extensibility</h3>
-<p>If you want a better autocomplete, you can write your own mixin.</p>
-<pre class="language-dart"><code class="language-dart">abstract class fontSizeMixin {
-  void add(String property, String value);
-
-  void fontSize({num px, num em, num rem}) {
-    if (px != null) add('font-size', '${px}px');
-    if (em != null) add('font-size', '${em}em');
-    if (rem != null) add('font-size', '${rem}rem');
+<pre class="language-dart"><code class="language-dart">final redOnHoverMixin = '''
+  &amp;:hover {
+    color: red;
   }
-}
+''';
 
-class XDss = Dss with fontSizeMixin;
+final blue = dss('''
+  color: blue;
+  $redOnHoverMixin
+''');
 
-final big = new XDss()..fontSize(rem: 10);
+final green = dss('''
+  color: green;
+  $redOnHoverMixin
+''');
 </code></pre>
-<h2>DO NOT USE THIS LIBRARY</h2>
-<p>This library is usable, but it's more like a proof of concept than a real library. There are tons of issues. There is no test. Browser support is unknown because I only tried this on latest Chrome and Firefox on Linux. There is no benchmark, so this may be too slow and not usable in real life. The problem list goes on... and on.</p>
-<p>However, if you think this library has a bright future, please help out by filing issues or submiting PRs. We are gonna make it real together someday :)</p>
+<h3>Production Mode</h3>
+<p>Production mode will utilize the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule"><code>CSSStyleSheet.insertRule</code></a>. <code>insertRule</code> is super fast, but its big drawback is that the css won't show in devtool's <code>&lt;style&gt;</code>.</p>
+<p>To enable production mode, set an environment variable <code>dss</code> to <code>prod</code>.</p>
+<p>An example of what <code>build.yaml</code> would look like:</p>
+<pre class="language-yaml"><code class="language-yaml">targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        options:
+          compiler: dart2js
+          dart2js_args:
+          - --fast-startup
+          - --minify
+          - --trust-type-annotations
+          - --trust-primitives
+          - -Ddss=prod # This line is needed to enable production mode.
+</code></pre>
       </section>
       
 
@@ -316,19 +307,14 @@ final big = new XDss()..fontSize(rem: 10);
               <span class="name"><a href="config/config-library.html">config</a></span>
             </dt>
             <dd>
-              This library lets you change the way CSS rule is inserted into the DOM and change how unique class names are generated. <a href="config/config-library.html">[...]</a>
+              This library lets you change the way CSS rule is inserted into the DOM
+and change how unique class names are generated. <a href="config/config-library.html">[...]</a>
             </dd>
             <dt id="dss">
               <span class="name"><a href="dss/dss-library.html">dss</a></span>
             </dt>
             <dd>
-              <a href="https://github.com/furrary/dss/blob/master/README.md">Examples of how this library might be used.</a>
-            </dd>
-            <dt id="extra">
-              <span class="name"><a href="extra/extra-library.html">extra</a></span>
-            </dt>
-            <dd>
-              <em>DO NOT IMPORT THIS. This is just for better documentation.</em> <a href="extra/extra-library.html">[...]</a>
+              The main library of this package.
             </dd>
         </dl>
       </section>
@@ -339,7 +325,7 @@ final big = new XDss()..fontSize(rem: 10);
 
 <footer>
   <span class="no-break">
-    dss 0.0.1
+    dss 0.1.0
   </span>
 
 </footer>

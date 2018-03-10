@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the importCss function from the dss library, for the Dart programming language.">
-  <title>importCss function - dss library - Dart API</title>
+  <meta name="description" content="API docs for the dss function from the dss library, for the Dart programming language.">
+  <title>dss function - dss library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="..">
 
@@ -25,9 +25,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="index.html">dss</a></li>
     <li><a href="dss/dss-library.html">dss</a></li>
-    <li class="self-crumb">importCss function</li>
+    <li class="self-crumb">dss function</li>
   </ol>
-  <div class="self-name">importCss</div>
+  <div class="self-name">dss</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,26 +54,44 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>importCss function</h1>
+    <h1>dss function</h1>
 
     <section class="multi-line-signature">
-        <span class="returntype">void</span>
-        <span class="name ">importCss</span>
-(<wbr><span class="parameter" id="importCss-param-url"><span class="type-annotation">String</span> <span class="parameter-name">url</span>, [</span> <span class="parameter" id="importCss-param-mediaQuery"><span class="type-annotation">String</span> <span class="parameter-name">mediaQuery</span> = <span class="default-value">''</span></span> ])
+        <span class="returntype">String</span>
+        <span class="name ">dss</span>
+(<wbr><span class="parameter" id="dss-param-markup"><span class="type-annotation">String</span> <span class="parameter-name">markup</span></span>)
     </section>
     <section class="desc markdown">
-      <p>CSS's @import.</p>
-<pre class="language-dart"><code class="language-dart">importCss("url('https://fonts.googleapis.com/css?family=Roboto')", 'screen');
+      <p>Inserts a CSS rule with the given declarations markup and
+returns a generated unique name to use as <code>className</code>.</p>
+<p>The examples show how you would use this function.</p>
+<pre class="language-dart"><code class="language-dart">querySelector('someSelector').className = dss(''
+    'color: red;'
+    'font-size: 12px;');
+</code></pre>
+<pre class="language-dart"><code class="language-dart">final forIpad = '@media (min-width: 768px) and (max-width: 1024px)';
+final box = dss('''
+  color: red;
+
+  $forIpad {
+    color: blue;
+  }
+''');
+
+void main() {
+  querySelector('someSelector')
+    ..className = box
+    ..text = 'I\'m normally red, but turn blue on an iPad.';
+}
 </code></pre>
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">void importCss(String url, [String mediaQuery = &#39;&#39;]) {
-  if (!url.startsWith(url) &amp;&amp; !url.startsWith(&#39;&quot;&#39;) &amp;&amp; !url.startsWith(&quot;&#39;&quot;)) {
-    url = &#39;&quot;$url&quot;&#39;;
-  }
-  sheet.addFirst(&#39;@import $url $mediaQuery;&#39;);
+      <pre class="language-dart"><code class="language-dart">String dss(String markup) {
+  String name = generateUniqueName();
+  parseAndInsert(&#39;.$name&#39;, markup);
+  return name;
 }</code></pre>
     </section>
 

@@ -7,3 +7,7 @@ pubspec.lock
 
 # Directory created by dartdoc
 doc/api/
+
+# For testing only
+web/
+build.release.yaml

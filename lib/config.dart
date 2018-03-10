@@ -1,17 +1,19 @@
-/// This library lets you change the way CSS rule is inserted into the DOM and change how unique class names are generated.
+/// This library lets you change the way CSS rule is inserted into the DOM
+/// and change how unique class names are generated.
+///
+/// The config needs to be done before any function in this package is called.
 ///
 /// ```dart
-/// import 'package:dss/config.dart';
+/// import 'config.dart' as config;
 ///
-/// class AwesomeNameGenerator extends NameGenerator {
-///   @override
-///   String generate() => 'awesome';
-/// }
+/// String generateAwesomeName() => 'awesome';
 ///
 /// void main() {
-///   Config.nameGenerator = new AwesomeNameGenerator();
+///   config.generateUniqueName = generateAwesomeName;
 /// }
 /// ```
 library config;
 
 export 'src/config.dart';
+export 'src/name_generator.dart';
+export 'src/style_sheet.dart';

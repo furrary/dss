@@ -7,9 +7,7 @@ It has some pros and, certainly, cons, but I won't point that out here because t
 
 To my knowledge, at the time I wrote this, there's no library to do CSS in Dart yet. So, there you go, the first library of its kind.
 
-I want this library to utilize as many Dart's benefits as possible. Those include [optional new][], method cascades and `dart2js`'s tree shaking. Thus, I decide not to use [`package:js`][] because, yeah, it won't be darty enough.
-
-The APIs may not be as magical as JS because, since the introduction of strong mode, Dart is not a dynamic language anymore. You inevitably need more boilerplates to accomplish the same thing. If you have an idea of how to improve these APIs, feel free to file an issue or create a better library. If you do create a new library, please tell me. I want to use it as well :)
+This library is lightweight and platform agnostic. It doesn't do anything special. It doesn't auto-prefix your rules. It doesn't have some sophisticated cache. It just enables you to write CSS in Dart.
 
 _[dartdocs.org][] uses Dart 1.x SDK to generate docs and fails to build, so I need to build the [docs][] myself._
 
@@ -29,13 +27,16 @@ CSS
 DSS
 
 ```dart
-querySelector('someSelector').className = (Dss() // Dart2's optional new
-      ..add('color', 'red')
-      ..add('font-size', '12px'))
-    .name;
+querySelector('someSelector').className = dss(''
+    'color: red;'
+    'font-size: 12px;');
 ```
 
+`dss` will generate a unique class name for your rule, parse the rule and insert it into a `<style>` tag.
+
 ### Global Rule
+
+You might need to specify the selector yourself.
 
 CSS
 
@@ -49,13 +50,11 @@ body {
 DSS
 
 ```dart
-Dss()
-  ..select('html, body')
-  ..add('padding', '0')
-  ..register();
+global(
+  'html, body',
+  'padding: 0;',
+);
 ```
-
-You need to call `register()`, otherwise the library will never know if you are done with the rule declaration or not, and the rule won't be inserted.
 
 ### Nesting and Pseudoclasses
 
@@ -82,20 +81,24 @@ CSS
 DSS
 
 ```dart
-final box = new Dss()
-  ..add('color', 'red')
-  ..nest(Dss()
-    ..select('&:hover')
-    ..add('color', 'blue'))
-  ..nest(Dss()
-    ..select('> h5')
-    ..add('font-size', '20px')
-    ..nest(Dss()
-      ..select('.bigger > &')
-      ..add('font-size', '30px')));
+final box = dss('''
+  color: red;
+
+  &:hover {
+    color: blue;
+  }
+
+  > h5 {
+    font-size: 20px;
+  }
+
+  .bigger > & > h5 {
+    font-size: 30px;
+  }
+''');
 ```
 
-If you don't specify the selector for a `Dss` instance, it will have a unique class name. So, the concept of nesting might not be that important anymore, except for pseudoclasses, markups and legacy CSS interops.
+`dss` can generate a unique class name for you, so the concept of nesting might not be that important anymore, except for pseudoclasses, markups and legacy CSS interops.
 
 ### Fallback Values
 
@@ -112,18 +115,9 @@ DSS
 
 ```dart
 // There's nothing special here.
-final box = new Dss()..add('color','purple')..add('color', 'rebeccapurple');
-```
-
-It can be a bit more declarative, but, IMO, needs some unnecessary parsing.
-
-```dart
-final box = new Dss()
-  ..addMap({
-    'color': 'rebeccapurple'
-  }, fallback: {
-    'color': ['purple']
-  });
+final box = dss(''
+    'color: purple;'
+    'color: rebeccapurple;');
 ```
 
 ### Media Queries `@media`
@@ -145,27 +139,15 @@ CSS
 DSS
 
 ```dart
-final box = new Dss()
-  ..add('color', 'red')
-  ..media(Media()
-    ..inquire('(min-width: 768px) and (max-width: 1024px)')
-    ..add('color', 'blue'));
+final forIpad = '@media (min-width: 768px) and (max-width: 1024px)';
+final box = dss('''
+  color: red;
+
+  $forIpad {
+    color: blue;
+  }
+''');
 ```
-
-or
-
-```dart
-Media forIpad() => Media()
-  ..minWidth('768px')
-  ..maxWidth('1024px');
-
-final box = new Dss()
-  ..add('color', 'red')
-  ..media(forIpad()
-    ..add('color', 'blue'));
-```
-
-Caution: `minWidth` and `maxWidth` implementations are just string concatenations. Do not think it does some magical stuff. You need to understand how to write a correct [media query][] anyway.
 
 ### Font Face `@font-face`
 
@@ -182,17 +164,12 @@ CSS
 DSS
 
 ```dart
-Dss()
-  ..select('@font-face')
-  ..add('font-family', 'Open Sans')
-  ..add(
-      'src',
-      'url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),'
-      'url("/fonts/OpenSans-Regular-webfont.woff") format("woff")')
-  ..register();
+fontFace('''
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
+       url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+''');
 ```
-
-To my knowledge, `@font-face` is just a global rule. If there's anything special about `@font-face` that you can't deal with, please file an issue.
 
 ### Keyframes `@keyframes`
 
@@ -217,13 +194,19 @@ CSS
 DSS
 
 ```dart
-final fontBulger = new Keyframes()
-  ..add(Frame.list([0, 100])..add('font-size', '10px'))
-  ..add(Frame(50)..add('font-size', '12px'));
+final fontBulger = keyframes('''
+  0%,
+  100% {
+    font-size: 10px;
+  }
+  50% {
+    font-size: 12px;
+  }
+''');
 
-querySelector('querySelector')
-  ..className =
-      (Dss()..add('animation', '${fontBulger.name} 2s infinite')).name
+querySelector('someSelector')
+  ..className = dss('animation: $fontBulger 2s infinite;')
+  ..text = "Hello";
 ```
 
 ### Import `@import`
@@ -237,8 +220,7 @@ CSS
 DSS
 
 ```dart
-importCss("url('https://fonts.googleapis.com/css?family=Roboto')",
-    (Media()..screen()).query);
+importCss("url('https://fonts.googleapis.com/css?family=Roboto')", 'screen');
 ```
 
 ### Supports `@supports`
@@ -248,11 +230,11 @@ Just use the native [`Css.supports`][] and [`Css.supportsCondition`][].
 ### Theming
 
 ```dart
-Dss themedClass(String primaryColor, String textColor) =>
-    Dss()..add('color', textColor)..add('background-color', primaryColor);
+String themedClass(String primaryColor, String textColor) => dss('''
+  color: $textColor;
+  background-color: $primaryColor;
+''');
 ```
-
-Theming is pretty easy with a factory function :)
 
 Moreover, it can be more reusable with cache.
 
@@ -263,16 +245,16 @@ class Theme {
   Theme(this.primaryColor, this.textColor);
 }
 
-final cache = new Expando<Dss>();
+final cache = new Expando<String>();
 
 ButtonElement themedButton(Theme theme, [String text = 'Click!']) {
   if (cache[theme] == null) {
-    cache[theme] = Dss()
-      ..add('color', theme.textColor)
-      ..add('background-color', theme.primaryColor);
+    cache[theme] = dss(''
+        'color: ${theme.textColor};'
+        'background-color: ${theme.primaryColor};');
   }
-  return ButtonElement()
-    ..className = cache[theme].name
+  return new ButtonElement()
+    ..className = cache[theme]
     ..text = text;
 }
 
@@ -319,50 +301,48 @@ CSS
 DSS
 
 ```dart
-final redWhenHovered = new Dss()
-  ..nest(Dss()
-    ..select('&:hover')
-    ..add('color', 'red'));
-
-final blue = new Dss()
-  ..add('color', 'blue')
-  ..compose(redWhenHovered);
-
-final green = new Dss()
-  ..add('color', 'green')
-  ..compose(redWhenHovered);
-```
-
-### Extensibility
-
-If you want a better autocomplete, you can write your own mixin.
-
-```dart
-abstract class fontSizeMixin {
-  void add(String property, String value);
-
-  void fontSize({num px, num em, num rem}) {
-    if (px != null) add('font-size', '${px}px');
-    if (em != null) add('font-size', '${em}em');
-    if (rem != null) add('font-size', '${rem}rem');
+final redOnHoverMixin = '''
+  &:hover {
+    color: red;
   }
-}
+''';
 
-class XDss = Dss with fontSizeMixin;
+final blue = dss('''
+  color: blue;
+  $redOnHoverMixin
+''');
 
-final big = new XDss()..fontSize(rem: 10);
+final green = dss('''
+  color: green;
+  $redOnHoverMixin
+''');
 ```
 
-## DO NOT USE THIS LIBRARY
+### Production Mode
 
-This library is usable, but it's more like a proof of concept than a real library. There are tons of issues. There is no test. Browser support is unknown because I only tried this on latest Chrome and Firefox on Linux. There is no benchmark, so this may be too slow and not usable in real life. The problem list goes on... and on.
+Production mode will utilize the [`CSSStyleSheet.insertRule`][]. `insertRule` is super fast, but its big drawback is that the css won't show in devtool's `<style>`.
 
-However, if you think this library has a bright future, please help out by filing issues or submiting PRs. We are gonna make it real together someday :)
+To enable production mode, set an environment variable `dss` to `prod`.
 
-[`package:js`]: https://pub.dartlang.org/packages/js
-[optional new]: https://github.com/dart-lang/sdk/blob/master/docs/language/informal/optional-new-const.md
+An example of what `build.yaml` would look like:
+
+```yaml
+targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        options:
+          compiler: dart2js
+          dart2js_args:
+          - --fast-startup
+          - --minify
+          - --trust-type-annotations
+          - --trust-primitives
+          - -Ddss=prod # This line is needed to enable production mode.
+```
+
 [dartdocs.org]: https://www.dartdocs.org/
 [docs]: https://furrary.github.io/dss/
-[media query]: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
 [`css.supports`]: https://api.dartlang.org/dev/dart-html/Css/supports.html
 [`css.supportscondition`]: https://api.dartlang.org/dev/dart-html/Css/supportsCondition.html
+[`cssstylesheet.insertrule`]: https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule
